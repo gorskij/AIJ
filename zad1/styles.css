@@ -1,22 +1,21 @@
 .left-top-frame {
     position: absolute;
-    top: 45%;
-    left: 19%;
-    width: 10px;
-    height: 102px;
+    top: 96px;
+    left: 200px;
+    width: 22px;
+    height: 200px;
     background-color: lightgray;
     transform: rotate(35deg);
     border-radius: 90px;
 }
 .left-bottom-frame {
     position: absolute;
-    top: 53%;
-    left: 20%;
-    width: 10px;
-    height: 95px;
+    top: 169px;
+    left: 240px;
+    width: 22px;
+    height: 200px;
     background-color: lightgrey;
     transform: rotate(90deg);
     border-radius: 90px;
-    margin-left: 2px;
-
+    margin-left: 1px;
 }
