@@ -1,21 +1,63 @@
-.left-top-frame {
+body {
+    background-color: skyblue;
+}
+.bike-frame * {
     position: absolute;
+    background-color: lightcoral;
+    border-radius: 90px;
+    width: 22px;
+    z-index: 2;
+}
+.left-top-frame {   
     top: 96px;
     left: 200px;
-    width: 22px;
     height: 200px;
-    background-color: lightgray;
     transform: rotate(35deg);
-    border-radius: 90px;
 }
 .left-bottom-frame {
-    position: absolute;
     top: 169px;
     left: 240px;
-    width: 22px;
     height: 200px;
-    background-color: lightgrey;
     transform: rotate(90deg);
-    border-radius: 90px;
-    margin-left: 1px;
+}
+.middle-frame {
+    top: 102px;
+    left: 291px;
+    height: 188px;
+    transform: rotate(151deg);
+}
+.right-top-frame {
+    top: 23px;
+    left: 342px;
+    height: 200px;
+    transform: rotate(90deg);
+}
+.right-bottom-frame {
+    top: 96px;
+    left: 383px;
+    height: 200px;
+    transform: rotate(35deg);
+}
+.front-frame {
+    top: 102px;
+    left: 475px;
+    height: 188px;
+    transform: rotate(151deg);
+}
+.bike-tires *{
+    position: absolute;
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    border: 10px solid transparent;
+    border-color: black; 
+    z-index: 1;
+}
+.front-tire {
+    top: 170px;
+    left: 425px;
+}
+.back-tire {
+    top: 170px;
+    left: 65px;
 }
