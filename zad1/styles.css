@@ -1,6 +1,10 @@
 body {
     background-color: skyblue;
 }
+.bike {
+    position: absolute;
+    top: 96px;
+}
 .bike-frame * {
     position: absolute;
     background-color: lightcoral;
@@ -21,9 +25,9 @@ body {
     transform: rotate(90deg);
 }
 .middle-frame {
-    top: 102px;
-    left: 291px;
-    height: 188px;
+    top: 59px;
+    left: 280px;
+    height: 230px;
     transform: rotate(151deg);
 }
 .right-top-frame {
@@ -39,9 +43,9 @@ body {
     transform: rotate(35deg);
 }
 .front-frame {
-    top: 102px;
-    left: 475px;
-    height: 188px;
+    top: 58px;
+    left: 462px;
+    height: 234px;
     transform: rotate(151deg);
 }
 .bike-tires *{
@@ -60,4 +64,57 @@ body {
 .back-tire {
     top: 170px;
     left: 65px;
+}
+.bike-handles {
+    position: absolute;
+    background-color: darkgray;
+    border-radius: 90px;
+    width: 22px;
+    z-index: 2;
+    height: 50px;
+    transform: rotate(90deg);
+    top: 54px;
+    left: 422px;
+}
+.bike-seat {
+    position: absolute;
+    background-color: darkgray;
+    border-radius: 90px;
+    width: 22px;
+    z-index: 2;
+    height: 70px;
+    transform: rotate(90deg);
+    top: 44px;
+    left: 236px;
+}
+.wheel {
+    position: absolute;
+    background-color: yellow;
+    border-radius: 50%;
+    z-index: 3;
+    width: 70px;
+    height: 70px;
+    top: 235px;
+    left: 310px;
+}
+.crank {
+    position: absolute;
+    background-color: darkgray;
+    border-radius: 90px;
+    width: 14px;
+    z-index: 4;
+    height: 70px;
+    top: 264px;
+    left: 337px;
+}
+.pedal {
+    position: absolute;
+    background-color: black;
+    border-radius: 90px;
+    width: 14px;
+    z-index: 4;
+    height: 35px;
+    transform: rotate(90deg);
+    top: 264px;
+    left: 337px; 
 }
