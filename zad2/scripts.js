@@ -1,33 +1,30 @@
 "use strict"
 let todoList = [];
+const BASE_URL = "https://api.jsonbin.io/v3/b/651fd16f54105e766fbe85b6";
+const SECRET_KEY = "$2a$10$KhMx./MOzgkmeuO4s/D7U.hpSz3M1dDIo06HMJgHtq/MvZBvtVfSC";
 let initList = function() {
-    let savedList = window.localStorage.getItem("todos");
-
-    if (savedList != null)
-        todoList = JSON.parse(savedList);
-    else {
-        todoList.push(
-            {
-                title: "Learn JS",
-                description: "Create a demo application for my TODO's",
-                place: "445",
-                dueDate: new Date(2019, 10, 16)
-            },
-            {
-                title: "Lecture test",
-                description: "Quick test from the first three lectures",
-                place: "F6",
-                dueDate: new Date(2019, 10, 17)
-            }
-        );
-    }
+    $.ajax({
+        // copy Your bin identifier here. It can be obtained in the dashboard
+        url: BASE_URL,
+        type: 'GET',
+        headers: { //Required only if you are trying to access a private bin
+            'X-Master-Key': SECRET_KEY,
+            'X-Bin-Meta': false,
+        },
+        success: (data) => {
+            todoList = data
+        },
+        error: (err) => {
+            console.log(err.responseJSON);
+        }
+    });
 }
 
 initList();
 
 let deleteTodo = function(index) {
     todoList.splice(index,1);
-    window.localStorage.setItem("todos", JSON.stringify(todoList));
+    updateJSONbin();
 }
 
 let updateTodoList = function() {
@@ -85,5 +82,23 @@ let addTodo = function() {
 
     //add item to the list
     todoList.push(newTodo);
-    window.localStorage.setItem("todos", JSON.stringify(todoList));
+    updateJSONbin();
+}
+
+let updateJSONbin = function() {
+    $.ajax({
+        url: BASE_URL,
+        type: 'PUT',
+        headers: { //Required only if you are trying to access a private bin
+            'X-Master-Key': SECRET_KEY
+        },
+        contentType: 'application/json',
+        data: JSON.stringify(todoList),
+        success: (data) => {
+            console.log(data);
+        },
+        error: (err) => {
+            console.log(err.responseJSON);
+        }
+    });
 }
