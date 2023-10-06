@@ -39,23 +39,27 @@ let updateTodoList = function() {
         todoListDiv.removeChild(todoListDiv.firstChild);
     }
 
+    let filterInput = document.getElementById("inputSearch");
+
     //add all elements
     for (let todo in todoList) {
-        let newElement = document.createElement("div");
-        let newContent = document.createTextNode(
-            todoList[todo].title + " " + todoList[todo].description);
-        let newDeleteButton = document.createElement("input");
-        newDeleteButton.type = "button";
-        newDeleteButton.value = "x";
-        newDeleteButton.addEventListener("click",
-            function() {
-                deleteTodo(todo);
-            });
-        newElement.appendChild(newContent);
-        newElement.appendChild(newDeleteButton);
-        todoListDiv.appendChild(newElement);
+        if(filterInput.value === "" || todoList[todo].title.includes(filterInput.value)
+        || todoList[todo].description.includes(filterInput.value)) {
+            let newElement = document.createElement("div");
+            let newContent = document.createTextNode(
+                todoList[todo].title + " " + todoList[todo].description);
+            let newDeleteButton = document.createElement("input");
+            newDeleteButton.type = "button";
+            newDeleteButton.value = "x";
+            newDeleteButton.addEventListener("click",
+                function () {
+                    deleteTodo(todo);
+                });
+            newElement.appendChild(newContent);
+            newElement.appendChild(newDeleteButton);
+            todoListDiv.appendChild(newElement);
+        }
     }
-
 }
 
 setInterval(updateTodoList, 1000);
