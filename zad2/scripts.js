@@ -1,27 +1,33 @@
 "use strict"
 let todoList = [];
 let initList = function() {
-    todoList.push(
-        {
-            title: "Learn JS",
-            description: "Create a demo application for my TODO's",
-            place: "445",
-            dueDate: new Date(2019,10,16)
-        },
-        {
-            title: "Lecture test",
-            description: "Quick test from the first three lectures",
-            place: "F6",
-            dueDate: new Date(2019,10,17)
-        }
-        // of course the lecture test mentioned above will not take place
-    );
+    let savedList = window.localStorage.getItem("todos");
+    console.log(window.localStorage)
+    if (savedList != null)
+        todoList = JSON.parse(savedList);
+    else {
+        todoList.push(
+            {
+                title: "Learn JS",
+                description: "Create a demo application for my TODO's",
+                place: "445",
+                dueDate: new Date(2019, 10, 16)
+            },
+            {
+                title: "Lecture test",
+                description: "Quick test from the first three lectures",
+                place: "F6",
+                dueDate: new Date(2019, 10, 17)
+            }
+        );
+    }
 }
 
 initList();
 
 let deleteTodo = function(index) {
     todoList.splice(index,1);
+    window.localStorage.setItem("todos", JSON.stringify(todoList));
 }
 
 let updateTodoList = function() {
@@ -48,8 +54,6 @@ let updateTodoList = function() {
         newElement.appendChild(newContent);
         newElement.appendChild(newDeleteButton);
         todoListDiv.appendChild(newElement);
-
-
     }
 
 }
@@ -74,6 +78,8 @@ let addTodo = function() {
         place: newPlace,
         dueDate: newDate
     };
+
     //add item to the list
     todoList.push(newTodo);
+    window.localStorage.setItem("todos", JSON.stringify(todoList));
 }
