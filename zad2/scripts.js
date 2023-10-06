@@ -46,12 +46,12 @@ function generateTableHead(table, data) {
 }
 
 function generateTable(table, data, filter) {
-    if(data !== undefined) {
-        for (let element of data) {
+    if (data !== undefined) {
+        for (let i = 0; i < data.length; i++) {
+            let element = data[i];
             let row = table.insertRow();
-
-            if(filter.value === "" || element.title.includes(filter.value)
-                || element.description.includes(filter.value)) {
+            if (filter.value === "" || element.title.includes(filter.value)
+            || element.description.includes(filter.value)) {
                 for (let key in element) {
                     let cell = row.insertCell();
                     let text = document.createTextNode(element[key]);
@@ -63,10 +63,14 @@ function generateTable(table, data, filter) {
                 let newDeleteButton = document.createElement("input");
                 newDeleteButton.type = "button";
                 newDeleteButton.value = "x";
-                newDeleteButton.addEventListener("click",
-                    function () {
-                        deleteTodo(element);
-                    });
+
+
+                (function (currentIndex) {
+                    newDeleteButton.addEventListener("click",
+                        function () {
+                            deleteTodo(currentIndex);
+                        });
+                })(i);
 
                 cell.appendChild(newDeleteButton);
             }
@@ -80,7 +84,7 @@ let updateTodoList = function() {
     while (todoListDiv.firstChild) {
         todoListDiv.removeChild(todoListDiv.firstChild);
     }
-
+    
     let keys = todoList !== undefined ? Object.keys(todoList[0]) : null;
     let filterInput = document.getElementById("inputSearch");
 
