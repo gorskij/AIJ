@@ -2,7 +2,7 @@
 let todoList = [];
 let initList = function() {
     let savedList = window.localStorage.getItem("todos");
-    console.log(window.localStorage)
+
     if (savedList != null)
         todoList = JSON.parse(savedList);
     else {
