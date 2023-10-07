@@ -31,39 +31,54 @@ function generateTableHead(table, data) {
     if(data !== undefined) {
         let thead = table.createTHead();
         let row = thead.insertRow();
+
+        let th = document.createElement("th");
+        let text = document.createTextNode("#");
+        th.appendChild(text);
+        th.classList.add("col")
+        row.appendChild(th);
+
         for (let key of data) {
             let th = document.createElement("th");
             let text = document.createTextNode(key);
             th.appendChild(text);
+            th.classList.add("col")
             row.appendChild(th);
         }
 
-        let th = document.createElement("th");
-        let text = document.createTextNode("Remove");
+        th = document.createElement("th");
+        text = document.createTextNode("Remove");
         th.appendChild(text);
+        th.classList.add("col")
         row.appendChild(th);
     }
 }
 
-function generateTable(table, data, filter) {
+function generateTableBody(table, data, filter) {
     if (data !== undefined) {
+        let tbody = table.createTBody();
         for (let i = 0; i < data.length; i++) {
             let element = data[i];
-            let row = table.insertRow();
+            let row = tbody.insertRow();
+
             if (filter.value === "" || element.title.includes(filter.value)
             || element.description.includes(filter.value)) {
+                let cell = row.insertCell();
+                let text = document.createTextNode(i + 1);
+                
+                cell.appendChild(text);
+
                 for (let key in element) {
                     let cell = row.insertCell();
                     let text = document.createTextNode(element[key]);
                     cell.appendChild(text);
                 }
 
-                let cell = row.insertCell();
+                cell = row.insertCell();
 
                 let newDeleteButton = document.createElement("input");
                 newDeleteButton.type = "button";
                 newDeleteButton.value = "x";
-
 
                 (function (currentIndex) {
                     newDeleteButton.addEventListener("click",
@@ -89,7 +104,7 @@ let updateTodoList = function() {
     let filterInput = document.getElementById("inputSearch");
 
     generateTableHead(todoListDiv, keys);
-    generateTable(todoListDiv, todoList, filterInput);
+    generateTableBody(todoListDiv, todoList, filterInput);
 }
 
 setInterval(updateTodoList, 1000);
