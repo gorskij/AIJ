@@ -2,7 +2,7 @@
 let todoList = [];
 const BASE_URL = "https://api.jsonbin.io/v3/b/651fd16f54105e766fbe85b6";
 const SECRET_KEY = "$2a$10$KhMx./MOzgkmeuO4s/D7U.hpSz3M1dDIo06HMJgHtq/MvZBvtVfSC";
-let initList = function() {
+const initList = function() {
     $.ajax({
         // copy Your bin identifier here. It can be obtained in the dashboard
         url: BASE_URL,
@@ -22,78 +22,91 @@ let initList = function() {
 
 initList();
 
-let deleteTodo = function(index) {
+const deleteTodo = function(index) {
     todoList.splice(index,1);
     updateJSONbin();
 }
 
 function generateTableHead(table, data) {
-    if(data !== undefined) {
-        let thead = table.createTHead();
-        let row = thead.insertRow();
+    if(data === undefined) return;
 
+    let thead = table.createTHead();
+    let row = thead.insertRow();
+
+    let th = document.createElement("th");
+    let text = document.createTextNode("#");
+    th.appendChild(text);
+    th.classList.add("col")
+    row.appendChild(th);
+
+    for (let key of data) {
         let th = document.createElement("th");
-        let text = document.createTextNode("#");
-        th.appendChild(text);
-        th.classList.add("col")
-        row.appendChild(th);
-
-        for (let key of data) {
-            let th = document.createElement("th");
-            let text = document.createTextNode(key);
-            th.appendChild(text);
-            th.classList.add("col")
-            row.appendChild(th);
-        }
-
-        th = document.createElement("th");
-        text = document.createTextNode("Remove");
+        let text = document.createTextNode(key);
         th.appendChild(text);
         th.classList.add("col")
         row.appendChild(th);
     }
+
+    th = document.createElement("th");
+    text = document.createTextNode("Remove");
+    th.appendChild(text);
+    th.classList.add("col")
+    row.appendChild(th);
 }
 
-function generateTableBody(table, data, filter) {
-    if (data !== undefined) {
-        let tbody = table.createTBody();
-        for (let i = 0; i < data.length; i++) {
-            let element = data[i];
-            let row = tbody.insertRow();
 
-            if (filter.value === "" || element.title.includes(filter.value)
-            || element.description.includes(filter.value)) {
-                let cell = row.insertCell();
-                let text = document.createTextNode(i + 1);
-                
-                cell.appendChild(text);
-
-                for (let key in element) {
-                    let cell = row.insertCell();
-                    let text = document.createTextNode(element[key]);
-                    cell.appendChild(text);
-                }
-
-                cell = row.insertCell();
-
-                let newDeleteButton = document.createElement("input");
-                newDeleteButton.type = "button";
-                newDeleteButton.value = "x";
-
-                (function (currentIndex) {
-                    newDeleteButton.addEventListener("click",
-                        function () {
-                            deleteTodo(currentIndex);
-                        });
-                })(i);
-
-                cell.appendChild(newDeleteButton);
-            }
+function generateTableBody(table, data, filter, startDate, endDate) {
+    if (data === undefined) return;
+  
+    let tbody = table.createTBody();
+  
+    for (let i = 0; i < data.length; i++) {
+      let element = data[i];
+      
+      const filterMatches = (
+        filter.value === "" ||
+        element.title.includes(filter.value) ||
+        element.description.includes(filter.value)
+      );
+  
+      const startDateValid = startDate ? new Date(startDate) : null;
+      const endDateValid = endDate ? new Date(endDate) : null;
+  
+      const startDateCondition = !startDateValid || new Date(element.dueDate) >= startDateValid;
+      const endDateCondition = !endDateValid || new Date(element.dueDate) <= endDateValid;
+  
+      if (filterMatches && startDateCondition && endDateCondition) {
+        let row = tbody.insertRow();
+        let cell = row.insertCell();
+        let text = document.createTextNode(i + 1);
+        cell.appendChild(text);
+  
+        for (let key in element) {
+          cell = row.insertCell();
+          text = document.createTextNode(element[key]);
+          cell.appendChild(text);
         }
+  
+        cell = row.insertCell();
+  
+        let newDeleteButton = document.createElement("input");
+        newDeleteButton.type = "button";
+        newDeleteButton.value = "x";
+  
+        (function (currentIndex) {
+          newDeleteButton.addEventListener("click",
+            function () {
+              deleteTodo(currentIndex);
+            });
+        })(i);
+  
+        cell.appendChild(newDeleteButton);
+      }
     }
-}
-let updateTodoList = function() {
-    let todoListDiv =
+  }
+
+const updateTodoList = function() {
+    const todoListDiv =
         document.getElementById("todoListView");
 
     while (todoListDiv.firstChild) {
@@ -102,14 +115,16 @@ let updateTodoList = function() {
     
     let keys = todoList !== undefined ? Object.keys(todoList[0]) : null;
     let filterInput = document.getElementById("inputSearch");
-
+    let startDate = document.getElementById("inputSearchStartDate").value;
+    let endDate = document.getElementById("inputSearchEndDate").value;
+    
     generateTableHead(todoListDiv, keys);
-    generateTableBody(todoListDiv, todoList, filterInput);
+    generateTableBody(todoListDiv, todoList, filterInput, startDate, endDate);
 }
 
 setInterval(updateTodoList, 1000);
 
-let addTodo = function() {
+const addTodo = function() {
     //get the elements in the form
     let inputTitle = document.getElementById("inputTitle");
     let inputDescription = document.getElementById("inputDescription");
@@ -133,7 +148,7 @@ let addTodo = function() {
     updateJSONbin();
 }
 
-let updateJSONbin = function() {
+const updateJSONbin = function() {
     $.ajax({
         url: BASE_URL,
         type: 'PUT',

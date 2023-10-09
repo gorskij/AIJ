@@ -35,12 +35,22 @@
             </div>
             <input type="button" value="add"
                 onclick="addTodo()" class="btn btn-primary"/>
-        </form>
+        </form> 
     </div>
     <div class="container mt-5">
-        <div class="form-group">
-            <label for="inputSearch">Search</label>
-            <input type="text" class="form-control" id="inputSearch" placeholder="Type Your search here...">
+        <div class="form-group d-flex justify-content-center">
+            <div class="mx-3">
+                <label class="form-label" for="inputSearch">Search</label>
+                <input type="text" class="form-control" id="inputSearch" placeholder="Type Your search here...">
+            </div>
+            <div class="mx-3">
+                <label class="form-label" for="inputSearchStartDate">Start Date</label>
+                <input type="date" id="inputSearchStartDate" class="form-control"/>
+            </div>
+            <div class="mx-3">
+                <label class="form-label" for="inputSearchEndDate">End Date</label>
+                <input type="date" id="inputSearchEndDate" class="form-control"/>
+            </div>
         </div>
     </div>
     <div class="container mt-5">
