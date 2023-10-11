@@ -2,6 +2,24 @@
 let todoList = [];
 const BASE_URL = "https://api.jsonbin.io/v3/b/651fd16f54105e766fbe85b6";
 const SECRET_KEY = "$2a$10$KhMx./MOzgkmeuO4s/D7U.hpSz3M1dDIo06HMJgHtq/MvZBvtVfSC";
+
+const updateTodoList = function() {
+    const todoListDiv =
+        document.getElementById("todoListView");
+
+    while (todoListDiv.firstChild) {
+        todoListDiv.removeChild(todoListDiv.firstChild);
+    }
+    
+    let keys = todoList !== undefined ? Object.keys(todoList[0]) : null;
+    let filterInput = document.getElementById("inputSearch");
+    let startDate = document.getElementById("inputSearchStartDate").value;
+    let endDate = document.getElementById("inputSearchEndDate").value;
+    
+    generateTableHead(todoListDiv, keys);
+    generateTableBody(todoListDiv, todoList, filterInput, startDate, endDate);
+}
+
 const initList = function() {
     $.ajax({
         // copy Your bin identifier here. It can be obtained in the dashboard
@@ -13,6 +31,7 @@ const initList = function() {
         },
         success: (data) => {
             todoList = data
+            updateTodoList();
         },
         error: (err) => {
             console.log(err.responseJSON);
@@ -24,6 +43,7 @@ initList();
 
 const deleteTodo = function(index) {
     todoList.splice(index,1);
+    updateTodoList();
     updateJSONbin();
 }
 
@@ -105,25 +125,6 @@ function generateTableBody(table, data, filter, startDate, endDate) {
     }
   }
 
-const updateTodoList = function() {
-    const todoListDiv =
-        document.getElementById("todoListView");
-
-    while (todoListDiv.firstChild) {
-        todoListDiv.removeChild(todoListDiv.firstChild);
-    }
-    
-    let keys = todoList !== undefined ? Object.keys(todoList[0]) : null;
-    let filterInput = document.getElementById("inputSearch");
-    let startDate = document.getElementById("inputSearchStartDate").value;
-    let endDate = document.getElementById("inputSearchEndDate").value;
-    
-    generateTableHead(todoListDiv, keys);
-    generateTableBody(todoListDiv, todoList, filterInput, startDate, endDate);
-}
-
-setInterval(updateTodoList, 1000);
-
 const addTodo = function() {
     //get the elements in the form
     let inputTitle = document.getElementById("inputTitle");
@@ -145,6 +146,7 @@ const addTodo = function() {
 
     //add item to the list
     todoList.push(newTodo);
+    updateTodoList();
     updateJSONbin();
 }
 
