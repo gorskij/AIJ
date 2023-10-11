@@ -4,18 +4,17 @@ const BASE_URL = "https://api.jsonbin.io/v3/b/651fd16f54105e766fbe85b6";
 const SECRET_KEY = "$2a$10$KhMx./MOzgkmeuO4s/D7U.hpSz3M1dDIo06HMJgHtq/MvZBvtVfSC";
 
 const updateTodoList = function() {
-    const todoListDiv =
-        document.getElementById("todoListView");
+    const todoListDiv = $("#todoListView")[0];
 
     while (todoListDiv.firstChild) {
         todoListDiv.removeChild(todoListDiv.firstChild);
     }
-    
+
     let keys = todoList !== undefined ? Object.keys(todoList[0]) : null;
-    let filterInput = document.getElementById("inputSearch");
-    let startDate = document.getElementById("inputSearchStartDate").value;
-    let endDate = document.getElementById("inputSearchEndDate").value;
-    
+    let filterInput = $("#inputSearch")[0];
+    let startDate = $("#inputSearchStartDate")[0].value;
+    let endDate = $("#inputSearchEndDate")[0].value;
+
     generateTableHead(todoListDiv, keys);
     generateTableBody(todoListDiv, todoList, filterInput, startDate, endDate);
 }
@@ -127,10 +126,10 @@ function generateTableBody(table, data, filter, startDate, endDate) {
 
 const addTodo = function() {
     //get the elements in the form
-    let inputTitle = document.getElementById("inputTitle");
-    let inputDescription = document.getElementById("inputDescription");
-    let inputPlace = document.getElementById("inputPlace");
-    let inputDate = document.getElementById("inputDate");
+    let inputTitle = $("#inputTitle")[0];
+    let inputDescription = $("#inputDescription")[0];
+    let inputPlace = $("#inputPlace")[0];
+    let inputDate = $("#inputDate")[0];
     //get the values from the form
     let newTitle = inputTitle.value;
     let newDescription = inputDescription.value;
