@@ -82,19 +82,19 @@ function generateTableBody(table, data, filter, startDate, endDate) {
     for (let i = 0; i < data.length; i++) {
       let element = data[i];
       
-      const filterMatches = (
-        filter.value === "" ||
-        element.title.includes(filter.value) ||
-        element.description.includes(filter.value)
-      );
-  
+      const filterMatches = function () {
+          const value = filter.value.toLowerCase() 
+          return value === "" ||
+          element.title.toLowerCase().includes(value) ||
+          element.description.toLowerCase().includes(value)
+        }  
       const startDateValid = startDate ? new Date(startDate) : null;
       const endDateValid = endDate ? new Date(endDate) : null;
   
       const startDateCondition = !startDateValid || new Date(element.dueDate) >= startDateValid;
       const endDateCondition = !endDateValid || new Date(element.dueDate) <= endDateValid;
   
-      if (filterMatches && startDateCondition && endDateCondition) {
+      if (filterMatches() && startDateCondition && endDateCondition) {
         let row = tbody.insertRow();
         let cell = row.insertCell();
         let text = document.createTextNode(i + 1);
