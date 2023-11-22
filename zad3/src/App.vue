@@ -1,17 +1,29 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Table :data={movieData} />
+  {{movieData[0].title}}
+<!--  {{JSON.stringify(movieData[0])}}-->
+
+  aa
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Table from './components/MovieTable.vue'
+import movieData from "./assets/movies-2020s.json"
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Table
+
+  },
+  props: {
+    movieData,
+    resultData: String
   }
 }
+
+console.log(movieData);
 </script>
 
 <style>
