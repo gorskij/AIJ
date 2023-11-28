@@ -72,4 +72,7 @@ export default {
 .row {
   margin-top: 20px;
 }
+.form-group {
+  text-align: left;
+}
 </style>

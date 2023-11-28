@@ -47,7 +47,7 @@ export default {
       </tr>
       </tbody>
     </table>
-  <button @click="handleShowMore" v-if="visibleData.length < data.length">Pokaż więcej</button>
+  <button class="btn btn-info col-sm-2" @click="handleShowMore" v-if="visibleData.length < data.length">Pokaż więcej</button>
   </div>
 </template>
 
