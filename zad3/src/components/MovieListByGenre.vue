@@ -21,6 +21,16 @@ export default {
           this.movieGenreMap[genre].push(movie.title);
         });
       });
+
+      const sortedGenres = Object.keys(this.movieGenreMap).sort();
+      const sortedGenreMap = {};
+
+      sortedGenres.forEach(genre => {
+        const sortedTitles = this.movieGenreMap[genre].sort();
+        sortedGenreMap[genre] = sortedTitles;
+      });
+
+      this.movieGenreMap = sortedGenreMap;
     }
   }
 }

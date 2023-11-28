@@ -21,6 +21,18 @@ export default {
           this.movieCastMap[actor].push(movie.title);
         });
       });
+
+      const sortedActors = Object.keys(this.movieCastMap).sort();
+      const sortedCastMap = {};
+
+      sortedActors.forEach(actor => {
+        const sortedTitles = this.movieCastMap[actor].sort();
+        sortedCastMap[actor] = sortedTitles;
+      });
+
+      this.movieCastMap = sortedCastMap;
+
+      console.log('Movie Cast Map:', this.movieCastMap);
     }
   }
 }
@@ -37,7 +49,7 @@ export default {
         </ol>
       </li>
     </ul>
-    <p v-else>Brak filmów</p>
+    <p v-else>No movies available</p>
   </div>
 </template>
 
