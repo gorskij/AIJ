@@ -59,7 +59,7 @@ export default {
       if(formProductionTo)
         result = result.filter(({year}) => formProductionTo >= year);
       if(formCast)
-        result = result.filter(({cast}) => cast.findIndex((castPerson) => castPerson === "Steve Carell") !== -1);
+        result = result.filter(({cast}) => cast.findIndex((castPerson) => castPerson === formCast) !== -1);
 
       return result;
     }
