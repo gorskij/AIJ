@@ -53,7 +53,7 @@ export default {
       let result = toRaw(this.data);
 
       if(formTitle)
-        result = result.filter(({title}) => title === formTitle);
+        result = result.filter(({title}) => title.toLowerCase() === formTitle.toLowerCase());
       if(formProductionFrom)
         result = result.filter(({year}) => formProductionFrom <= year);
       if(formProductionTo)
