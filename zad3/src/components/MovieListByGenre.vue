@@ -40,10 +40,10 @@ export default {
   <div>
     <h1>Filmy wg gatunku</h1>
     <ul v-if="Object.keys(movieGenreMap).length > 0" class="movie-list">
-      <li v-for="(titles, genre) in movieGenreMap" :key="genre" class="genre-item">
+      <li v-for="(titles, genre) in movieGenreMap" :key="genre">
         <strong>{{ genre }}</strong>
-        <ol class="title-list">
-          <li v-for="(title) in titles" :key="title" class="title-item">{{ title }}</li>
+        <ol>
+          <li v-for="(title) in titles" :key="title">{{ title }}</li>
         </ol>
       </li>
     </ul>

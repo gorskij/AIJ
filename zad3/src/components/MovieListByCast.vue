@@ -31,8 +31,6 @@ export default {
       });
 
       this.movieCastMap = sortedCastMap;
-
-      console.log('Movie Cast Map:', this.movieCastMap);
     }
   }
 }
@@ -42,14 +40,14 @@ export default {
   <div>
     <h1>Filmy wg obsady</h1>
     <ul v-if="Object.keys(movieCastMap).length > 0" class="movie-list">
-      <li v-for="(titles, actor) in movieCastMap" :key="actor" class="actor-item">
+      <li v-for="(titles, actor) in movieCastMap" :key="actor">
         <strong>{{ actor }}</strong>
-        <ol class="title-list">
-          <li v-for="(title) in titles" :key="title" class="title-item">{{ title }}</li>
+        <ol>
+          <li v-for="(title) in titles" :key="title">{{ title }}</li>
         </ol>
       </li>
     </ul>
-    <p v-else>No movies available</p>
+    <p v-else>Brak filmów</p>
   </div>
 </template>
 
