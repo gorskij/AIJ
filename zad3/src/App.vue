@@ -1,10 +1,8 @@
 <template>
   <div class="container">
     <h1>Baza filmów</h1>
-  <SearchBar :data="movieData"/>
-  <Table :data={resultData} />
-<!--  {{JSON.stringify(movieData[0])}}-->
-
+  <SearchBar :data="movieData" @resultData="handleResultData"/>
+  <Table :data="resultData" />
   </div>
 </template>
 
@@ -22,11 +20,14 @@ export default {
   },
   data() {
     return {
-      movieData: movieData
+      movieData: movieData,
+      resultData: [],
     };
   },
-  props: {
-    resultData: String
+  methods: {
+    handleResultData(resultData) {
+      this.resultData = resultData;
+    }
   }
 }
 

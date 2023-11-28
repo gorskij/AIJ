@@ -47,7 +47,7 @@ export default {
   methods: {
     handleSubmit() {
       this.resultData = this.filterData(this.formData.title, this.formData.productionFrom, this.formData.productionTo, this.formData.cast)
-      console.log(this.resultData);
+      this.$emit("resultData", this.resultData);
     },
     filterData(formTitle, formProductionFrom, formProductionTo, formCast) {
       let result = toRaw(this.data);
