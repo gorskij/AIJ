@@ -2,31 +2,49 @@
   <div class="container">
     <h1>Baza filmów</h1>
   <SearchBar :data="movieData" @resultData="handleResultData"/>
-  <Table :data="resultData" />
+  <MovieTable :data="resultData" />
+  <MovieListByGenre :data="sampleMovieData" />
+  <MovieListByCast :data="sampleMovieData" />
   </div>
 </template>
 
 <script>
-import Table from './components/MovieTable.vue'
-import movieData from "./assets/movies-2020s.json"
+import MovieTable from './components/MovieTable.vue';
+import movieData from "./assets/movies-2020s.json";
 import SearchBar from "@/components/SearchBar.vue";
+import MovieListByGenre from "@/components/MovieListByGenre";
+import MovieListByCast from "@/components/MovieListByCast";
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default {
   name: 'App',
   components: {
     SearchBar,
-    Table
-  },
+    MovieTable,
+    MovieListByGenre,
+    MovieListByCast,
+},
   data() {
     return {
       movieData: movieData,
       resultData: [],
+      sampleMovieData: []
     };
+  },
+  watch: {
+    data: {
+      immediate: true, 
+      handler() {
+        this.sliceMovieData();
+      },
+    },
   },
   methods: {
     handleResultData(resultData) {
       this.resultData = resultData;
+    },
+    sliceMovieData() {
+      this.sampleMovieData = this.movieData.slice(0, 100);
     }
   }
 }
