@@ -4,12 +4,14 @@ export default {
   props: ['data'],
   data() {
     return {
+      movieData: [],
       itemsToShow: 10,
       visibleData: [],
     }
   },
   watch: {
     data: function() {
+      this.movieData = this.data;
       this.initData();
     }
   },
@@ -29,6 +31,9 @@ export default {
 
 <template>
   <div>
+    Liczba znalezionych: {{movieData.length}},
+    Widocznych: {{visibleData.length}}
+
     <table>
       <thead>
       <tr>
