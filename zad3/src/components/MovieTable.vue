@@ -31,8 +31,6 @@ export default {
 
 <template>
   <div>
-    Liczba znalezionych: {{movieData.length}},
-    Widocznych: {{visibleData.length}}
 
     <table>
       <thead>
@@ -52,7 +50,9 @@ export default {
       </tr>
       </tbody>
     </table>
-  <button class="btn btn-info col-sm-2" @click="handleShowMore" v-if="visibleData.length < data.length">Pokaż więcej</button>
+  <button class="btn btn-info col-sm-2" style="margin: 20px" @click="handleShowMore" v-if="visibleData.length < data.length">Pokaż więcej</button><br/>
+    Liczba znalezionych: {{movieData.length}},
+    Widocznych: {{visibleData.length}}
   </div>
 </template>
 
