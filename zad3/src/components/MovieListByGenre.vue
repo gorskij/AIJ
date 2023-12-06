@@ -1,4 +1,5 @@
 <script>
+import _ from 'lodash';
 export default {
   name: "MovieListByGenre",
   props: ['data'],
@@ -22,15 +23,21 @@ export default {
         });
       });
 
-      const sortedGenres = Object.keys(this.movieGenreMap).sort();
-      const sortedGenreMap = {};
+      const sortedByKeysAndValues = _.chain(this.movieGenreMap)
+        .map((movies, key) => ({ key, movies: _.sortBy(movies) }))
+        .orderBy(['key', 'movies'], ['asc', 'asc'])
+        .keyBy('key')
+        .mapValues('movies')
+        .value();
 
-      sortedGenres.forEach(genre => {
-        const sortedTitles = this.movieGenreMap[genre].sort();
-        sortedGenreMap[genre] = sortedTitles;
-      });
+      // const sortedGenres = Object.keys(this.movieGenreMap).sort();
 
-      this.movieGenreMap = sortedGenreMap;
+      // sortedGenres.forEach(genre => {
+      //   const sortedTitles = this.movieGenreMap[genre].sort();
+      //   sortedGenreMap[genre] = sortedTitles;
+      // });
+
+      this.movieGenreMap = sortedByKeysAndValues;
     }
   }
 }

@@ -1,4 +1,5 @@
 <script>
+import _ from 'lodash';
 export default {
   name: "MovieListByCast",
   props: ['data'],
@@ -22,13 +23,12 @@ export default {
         });
       });
 
-      const sortedActors = Object.keys(this.movieCastMap).sort();
-      const sortedCastMap = {};
-
-      sortedActors.forEach(actor => {
-        const sortedTitles = this.movieCastMap[actor].sort();
-        sortedCastMap[actor] = sortedTitles;
-      });
+      const sortedCastMap = _.chain(this.movieCastMap)
+        .map((movies, actor) => ({ actor, movies: _.sortBy(movies) }))
+        .orderBy(['actor', 'movies'], ['asc', 'asc'])
+        .keyBy('actor')
+        .mapValues('movies')
+        .value();
 
       this.movieCastMap = sortedCastMap;
     }
