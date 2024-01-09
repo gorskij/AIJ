@@ -1,0 +1,14 @@
+.centeringContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.results {
+    margin-top: 10px;
+}
+
+.filters {
+    margin-bottom: 10px;
+}
