@@ -14,6 +14,7 @@ const categories = [
         label: "Kategoria2"
     }
 ]
+
 function Products({title, rows, headerRow}: { title: string, rows: string[][], headerRow: string[] }) {
     const [shownRowsCount, setShownRowsCount] = useState(10);
     const [filteredName, setFilteredName] = useState("");
@@ -45,15 +46,15 @@ function Products({title, rows, headerRow}: { title: string, rows: string[][], h
         <div className={styles.centeringContainer}>
             <h2>{title}</h2>
             <div className={styles.filters}>
-                <TextField style={{marginRight: 10, width: 150}} label="Nazwa" variant="outlined" onChange={(e) => {
-                    setFilteredName(e.target.value)
-                }}/>
+                <TextField style={{marginRight: 10, width: 150}} label="Nazwa" variant="outlined"
+                           onChange={(e) => {
+                               setFilteredName(e.target.value)
+                           }}/>
                 <TextField
                     style={{width: 150}}
                     id="outlined-select-currency"
                     select
                     label="Kategoria"
-                    defaultValue="EUR"
                 >
                     {categories.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
@@ -71,7 +72,7 @@ function Products({title, rows, headerRow}: { title: string, rows: string[][], h
 
 export default Products;
 
-function compare(phrase, query) {
+function compare(phrase: string, query: string) {
     for (let x = 0; x < query.length; x++) {
         if (query[x] !== phrase[x]) {
             return false;
