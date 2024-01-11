@@ -1,0 +1,31 @@
+.icon {
+    width: 100px;
+    height: 100px;
+    margin-right: 13px;
+}
+
+.cart {
+    margin-top: 20px;
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.cart:hover {
+    filter: invert(30%);
+}
+
+.cart:active {
+    filter: invert(50%);
+}
+
+.amount {
+    font-size: 25px;
+    font-weight: 600;
+    position: relative;
+    top: -84px;
+}
