@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import Products from "./components/products/Products";
 import Cart from "./components/cart/Cart";
 import {onProductBuy, Product} from "./components/products/ProductsTypes";
-import { ToastContainer, toast } from 'react-toastify';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
     const addToCart: onProductBuy = (name, id, price, amount) => {
         setCartProducts([...cartProducts, ...id]);
         toast.success(name + " dodany!", {
-            position: "top-right",
+            position: "bottom-right",
             autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -41,16 +41,17 @@ function App() {
     }
 
 
-  return (
-      <div className="App">
-          <ToastContainer />
-          <div className="centering-div">
-              <Products title={"Produkty"} headerRow={["Nazwa", "Opis", "Cena"]} products={products} onBuy={addToCart}/>
-          </div>
-          <Cart products={cartProducts}/>
-      </div>
+    return (
+        <div className="App">
+            <ToastContainer/>
+            <Cart products={cartProducts}/>
+            <div className="centering-div">
+                <Products title={"Produkty"} headerRow={["Nazwa", "Opis", "Cena"]} products={products}
+                          onBuy={addToCart}/>
+            </div>
+        </div>
 
-  );
+    );
 }
 
 export default App;
