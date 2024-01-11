@@ -32,7 +32,7 @@ function Products({title, headerRow, products, onBuy}: ProductProps) {
 
     const buyButton = useCallback((product: Product) => {
         return <img className={styles.shoppingCart} src={ShoppingCart} alt="Kup"
-             onClick={() => onBuy(product.id, product.price, 1)}></img>
+             onClick={() => onBuy(product.name, product.id, product.price, 1)}></img>
     }, [onBuy]);
 
     const getProductRow = useCallback((product: Product) => [...getProductDataToView(product), buyButton(product)], [buyButton]);

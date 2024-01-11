@@ -1,4 +1,4 @@
-export type onProductBuy = (id: string, price: string, amount: number) => void;
+export type onProductBuy = (name: string, id: string, price: string, amount: number) => void;
 
 export type Product = {
     id: string;

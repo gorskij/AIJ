@@ -20,5 +20,9 @@
 }
 
 .shoppingCart:hover {
-    filter: invert(40%);
+    filter: invert(30%);
+}
+
+.shoppingCart:active {
+    filter: invert(50%);
 }
