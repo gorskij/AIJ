@@ -12,3 +12,13 @@
 .filters {
     margin-bottom: 10px;
 }
+
+.shoppingCart {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.shoppingCart:hover {
+    filter: invert(40%);
+}

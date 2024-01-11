@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Table.module.css"
 
-function Table({rows}: { rows: string[][] }) {
+function Table({rows}: { rows: any[][] }) {
     return (
         <table>
             {
