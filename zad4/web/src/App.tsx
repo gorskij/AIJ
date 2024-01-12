@@ -12,7 +12,7 @@ function App() {
             id: "1",
             category: "Kategoria1",
             name: "Testowy produkt",
-            description: "aaa",
+            description: "Testowy opis Testowy opis Testowy opis Testowy opis Testowy opis",
             price: "100",
         },
         {

@@ -83,7 +83,7 @@ function Products({title, headerRow, products, onBuy}: ProductProps) {
                 </TextField>
             </div>
 
-            {rowsInitialized && <Table rows={[shownHeaderRow, ...shownRows.slice(0, shownRowsCount)]}/>}
+            {rowsInitialized && <Table headerRow={shownHeaderRow} columnSizes={[2,10,1,1]} rows={shownRows.slice(0, shownRowsCount)}/>}
             {areMoreProductsToShow && <button onClick={() => showMore()}>Pokaż więcej</button>}
             <div className={styles.results}>Liczba znalezionych: {shownRows?.length},
                 Widocznych: {shownRows?.length > shownRowsCount ? shownRowsCount : shownRows?.length}</div>

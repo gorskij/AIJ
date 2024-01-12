@@ -1,39 +1,46 @@
 import React from "react";
 import styles from "./Table.module.css"
 
-function Table({rows}: { rows: any[][] }) {
-    return (
-        <table>
-            {
-                rows.map((row, rowIndex) => {
-                    if (rowIndex === 0)
+function Table({headerRow, columnSizes, rows}: { headerRow: any[], columnSizes: number[], rows: any[][] }) {
+
+    if (headerRow.length !== 0)
+        return (
+            <table className={styles.table}>
+                <colgroup>
+                    {
+                        columnSizes.map((column) => {
+                            return <col style={{width: column + "%"}}/>
+                        })
+                    }
+                </colgroup>
+                <thead>
+                <tr className={styles.headerRow}>
+                    {
+                        headerRow.map(((cell, cellIndex) => {
+                            return <td className={styles.cell} key={cellIndex}>{cell}</td>
+                        }))
+                    }
+                </tr>
+                </thead>
+
+
+                {rows.length !== 0 && <tbody className={styles.table}>
+                {
+                    rows.map((row, rowIndex) => {
                         return (
-                            <thead key={rowIndex + "table"}>
-                            <tr className={styles.row} key={rowIndex}>
+                            <tr className={styles.row} key={"Row" + rowIndex}>
                                 {
                                     row.map(((cell, cellIndex) => {
                                         return <td className={styles.cell} key={cellIndex}>{cell}</td>
                                     }))
                                 }
                             </tr>
-                            </thead>
                         )
-
-                    return (
-                        <tbody key={rowIndex + "table"}>
-                        <tr className={styles.row}>
-                            {
-                                row.map(((cell, cellIndex) => {
-                                    return <td className={styles.cell} key={cellIndex}>{cell}</td>
-                                }))
-                            }
-                        </tr>
-                        </tbody>
-                    )
-                })
-            }
-        </table>
-    );
+                    })
+                }
+                </tbody>}
+            </table>
+        );
 }
 
 export default Table;

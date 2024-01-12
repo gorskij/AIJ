@@ -5,10 +5,13 @@ import styles from "./Cart.module.css";
 
 function Cart({products}: CartProps) {
     return (
+        <>
         <div className={styles.cart}>
             <img className={styles.icon} src={CartIcon} alt="Koszyk"/>
             <div className={styles.amount}>{products.length}</div>
         </div>
+            {/*<div className={styles.cartView}></div>*/}
+        </>
     );
 }
 
