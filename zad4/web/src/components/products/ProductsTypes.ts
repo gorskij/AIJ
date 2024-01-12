@@ -11,8 +11,9 @@ export type Product = {
 export type ProductProps = {
     title: string;
     headerRow: string[];
-    products: Product[]
-    onBuy: OnProductBuy
+    products: Product[];
+    categories: string[];
+    onBuy: OnProductBuy;
 }
 
 

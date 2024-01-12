@@ -6,22 +6,7 @@ import {MenuItem} from "@mui/material";
 import ShoppingCart from "./shopping-cart.svg";
 import {Product, ProductProps} from "./ProductsTypes";
 
-const categories = [
-    {
-        value: "Wszystkie",
-        label: "Wszystkie"
-    },
-    {
-        value: "Kategoria1",
-        label: "Kategoria1"
-    },
-    {
-        value: "Kategoria2",
-        label: "Kategoria2"
-    }
-]
-
-function Products({title, headerRow, products, onBuy}: ProductProps) {
+function Products({title, headerRow, products, categories, onBuy}: ProductProps) {
     const [shownRowsCount, setShownRowsCount] = useState(10);
     const [shownRows, setShownRows] = useState(null);
     const [shownHeaderRow, setShownHeaderRow] = useState(null);
@@ -75,8 +60,8 @@ function Products({title, headerRow, products, onBuy}: ProductProps) {
                     defaultValue="Wszystkie"
                 >
                     {categories.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
+                        <MenuItem key={option} value={option}>
+                            {option}
                         </MenuItem>
                     ))}
                 </TextField>

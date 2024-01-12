@@ -7,26 +7,26 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {CartProduct, OnCreateOrder} from "./components/cart/CartTypes";
 
+const categories = ["Wszystkie", "Kategoria1", "Kategoria2"];
+
+const products: Product[] = [
+    {
+        id: "1",
+        category: "Kategoria1",
+        name: "Testowy produkt",
+        description: "Testowy opis Testowy opis Testowy opis Testowy opis Testowy opis",
+        price: "100",
+    },
+    {
+        id: "2",
+        category: "Kategoria1",
+        name: "Testowy produkt 2",
+        description: "aaa",
+        price: "5",
+    }
+];
 function App() {
-    const products: Product[] = [
-        {
-            id: "1",
-            category: "Kategoria1",
-            name: "Testowy produkt",
-            description: "Testowy opis Testowy opis Testowy opis Testowy opis Testowy opis",
-            price: "100",
-        },
-        {
-            id: "2",
-            category: "Kategoria1",
-            name: "Testowy produkt 2",
-            description: "aaa",
-            price: "5",
-        }
-    ];
-
     const [cartProducts, setCartProducts] = useState<CartProduct[] >([]);
-
     const addToCart: OnProductBuy = (name, id, price, amount) => {
         const newProduct: CartProduct = {id, name, price: parseInt(price), amount};
         const productIndex = cartProducts.findIndex((product) => product.id === id);
@@ -52,7 +52,7 @@ function App() {
         console.log(customerData);
         return {
             status: 200,
-            message: "Order created succesfully.",
+            message: "Order created successfully.",
         };
     }
 
@@ -62,7 +62,7 @@ function App() {
             <Cart products={cartProducts} onCreateOrder={onCreateOrder}/>
             <div className="centering-div">
                 <Products title={"Produkty"} headerRow={["Nazwa", "Opis", "Cena"]} products={products}
-                          onBuy={addToCart}/>
+                          categories={categories} onBuy={addToCart}/>
             </div>
         </div>
 
