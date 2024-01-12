@@ -1,16 +1,21 @@
-import React from 'react';
-import {CartProps} from "./CartType";
+import React, {useState} from 'react';
+import {CartProps} from "./CartTypes";
 import CartIcon from "./shopping-cart-2.svg";
 import styles from "./Cart.module.css";
+import CartDetails from "./CartDetails";
 
-function Cart({products}: CartProps) {
+function Cart({products, onCreateOrder}: CartProps) {
+    const [showCartDetails, setShowCartDetails] = useState(false);
+
     return (
         <>
-        <div className={styles.cart}>
-            <img className={styles.icon} src={CartIcon} alt="Koszyk"/>
-            <div className={styles.amount}>{products.length}</div>
-        </div>
-            {/*<div className={styles.cartView}></div>*/}
+            <div className={styles.cart} onClick={() => setShowCartDetails(true)}>
+                <img className={styles.icon} src={CartIcon} alt="Koszyk"/>
+                <div className={styles.amount}>{products.length}</div>
+            </div>
+            {showCartDetails && <CartDetails products={products} onCreateOrder={onCreateOrder}
+                                             onClickAway={() => setShowCartDetails(false)}/>}
+
         </>
     );
 }

@@ -27,12 +27,11 @@ function Products({title, headerRow, products, onBuy}: ProductProps) {
     const [shownHeaderRow, setShownHeaderRow] = useState(null);
 
     const areMoreProductsToShow = shownRowsCount < products.length;
-
     const rowsInitialized = shownHeaderRow && shownRows;
 
     const buyButton = useCallback((product: Product) => {
         return <img className={styles.shoppingCart} src={ShoppingCart} alt="Kup"
-             onClick={() => onBuy(product.name, product.id, product.price, 1)}></img>
+                    onClick={() => onBuy(product.name, product.id, product.price, 1)}></img>
     }, [onBuy]);
 
     const getProductRow = useCallback((product: Product) => [...getProductDataToView(product), buyButton(product)], [buyButton]);
@@ -83,7 +82,8 @@ function Products({title, headerRow, products, onBuy}: ProductProps) {
                 </TextField>
             </div>
 
-            {rowsInitialized && <Table headerRow={shownHeaderRow} columnSizes={[2,10,1,1]} rows={shownRows.slice(0, shownRowsCount)}/>}
+            {rowsInitialized && <Table headerRow={shownHeaderRow} columnSizes={[4, 10, 2, 1]}
+                                       rows={shownRows.slice(0, shownRowsCount)}/>}
             {areMoreProductsToShow && <button onClick={() => showMore()}>Pokaż więcej</button>}
             <div className={styles.results}>Liczba znalezionych: {shownRows?.length},
                 Widocznych: {shownRows?.length > shownRowsCount ? shownRowsCount : shownRows?.length}</div>
@@ -103,5 +103,5 @@ function compare(phrase: string, query: string) {
 }
 
 function getProductDataToView(product: Product) {
-    return [product.name, product.description, product.price];
+    return [product.name, product.description, product.price + " zł"];
 }

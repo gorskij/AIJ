@@ -8,8 +8,8 @@ function Table({headerRow, columnSizes, rows}: { headerRow: any[], columnSizes: 
             <table className={styles.table}>
                 <colgroup>
                     {
-                        columnSizes.map((column) => {
-                            return <col style={{width: column + "%"}}/>
+                        columnSizes.map((column, index) => {
+                            return <col style={{width: column + "%"}} key={"Column" + index}/>
                         })
                     }
                 </colgroup>

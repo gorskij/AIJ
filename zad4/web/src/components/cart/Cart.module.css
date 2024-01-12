@@ -4,17 +4,8 @@
     margin-right: 13px;
 }
 :root {
-    --cart-view-height: 400px;
-    --cart-view-width: 700px;
-}
-.cartView {
-    position: fixed;
-    top: calc(100vh/2 - var(--cart-view-height)/2);
-    left: calc(100vw/2 - var(--cart-view-width)/2);
-    width: var(--cart-view-width);
-    height: min(30vh, 300px);
-    background-color: grey;
-    border-radius: 50px;
+    --cart-view-height: 80vh;
+    --cart-view-width: 80vw;
 }
 
 .cart {

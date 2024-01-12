@@ -2,9 +2,10 @@ import './App.css';
 import React, {useState} from 'react';
 import Products from "./components/products/Products";
 import Cart from "./components/cart/Cart";
-import {onProductBuy, Product} from "./components/products/ProductsTypes";
+import {OnProductBuy, Product} from "./components/products/ProductsTypes";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {CartProduct, OnCreateOrder} from "./components/cart/CartTypes";
 
 function App() {
     const products: Product[] = [
@@ -24,10 +25,16 @@ function App() {
         }
     ];
 
-    const [cartProducts, setCartProducts] = useState([]);
+    const [cartProducts, setCartProducts] = useState<CartProduct[] >([]);
 
-    const addToCart: onProductBuy = (name, id, price, amount) => {
-        setCartProducts([...cartProducts, ...id]);
+    const addToCart: OnProductBuy = (name, id, price, amount) => {
+        const newProduct: CartProduct = {id, name, price: parseInt(price), amount};
+        const productIndex = cartProducts.findIndex((product) => product.id === id);
+        if(productIndex === -1)
+            setCartProducts([...cartProducts, newProduct]);
+        else
+            cartProducts[productIndex].amount += 1;
+
         toast.success(name + " dodany!", {
             position: "bottom-right",
             autoClose: 3000,
@@ -40,11 +47,19 @@ function App() {
         });
     }
 
+    const onCreateOrder: OnCreateOrder = (products, customerData) => {
+        console.log(products);
+        console.log(customerData);
+        return {
+            status: 200,
+            message: "Order created succesfully.",
+        };
+    }
 
     return (
         <div className="App">
             <ToastContainer/>
-            <Cart products={cartProducts}/>
+            <Cart products={cartProducts} onCreateOrder={onCreateOrder}/>
             <div className="centering-div">
                 <Products title={"Produkty"} headerRow={["Nazwa", "Opis", "Cena"]} products={products}
                           onBuy={addToCart}/>
