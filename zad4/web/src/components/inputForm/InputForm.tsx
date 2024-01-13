@@ -54,44 +54,48 @@ function InputForm({onFormSubmitted}: InputFormProps) {
 
     return (
         <>
-            <TextField
-                required
-                id="outlined-required"
-                label="Nazwa użytkownika"
-                defaultValue=""
-                name="name"
-                onChange={(e) => {
-                    handleInput(e);
-                    setNameError(false);
-                }}
-                error={nameError}
-            />
-            <TextField
-                required
-                id="outlined-required"
-                label="Numer telefonu"
-                defaultValue=""
-                name="phoneNumber"
-                onChange={(e) => {
-                    handleInput(e);
-                    setPhoneError(false);
-                }}
-                error={phoneError}
-            />
-            <TextField
-                required
-                id="outlined-required"
-                label="Adres e-mail"
-                defaultValue=""
-                name="email"
-                onChange={(e) => {
-                    handleInput(e);
-                    setEmailError(false);
-                }}
-                error={emailError}
-                aria-errormessage={"Podaj prawidłowy email"}
-            />
+            <div style={{height: 80}}>
+                <TextField
+                    required
+                    id="outlined-required"
+                    label="Nazwa użytkownika"
+                    defaultValue=""
+                    name="name"
+                    onChange={(e) => {
+                        handleInput(e);
+                        setNameError(false);
+                    }}
+                    error={nameError}
+                    helperText={nameError ? "Podaj nazwę użytkownika" : ""}
+                />
+                <TextField
+                    required
+                    id="outlined-required"
+                    label="Numer telefonu"
+                    defaultValue=""
+                    name="phoneNumber"
+                    onChange={(e) => {
+                        handleInput(e);
+                        setPhoneError(false);
+                    }}
+                    error={phoneError}
+                    helperText={phoneError ? "Podaj prawidłowy numer telefonu" : ""}
 
+                />
+                <TextField
+                    required
+                    id="outlined-required"
+                    label="Adres e-mail"
+                    defaultValue=""
+                    name="email"
+                    onChange={(e) => {
+                        handleInput(e);
+                        setEmailError(false);
+                    }}
+                    error={emailError}
+                    helperText={emailError ? "Podaj prawidłowy adres email" : ""}
+                />
+            </div>
             <div style={{marginTop: 20}}><Button variant="contained" onClick={() => handleSend()}>Złóż
                 zamówienie</Button></div>
         </>
