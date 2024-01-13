@@ -1,4 +1,4 @@
-export type OnProductBuy = (name: string, id: string, price: string, amount: number) => void;
+export type onBuy = (name: string, id: string, price: string, amount: number) => void;
 
 export type Product = {
     id: string;
@@ -13,7 +13,7 @@ export type ProductProps = {
     headerRow: string[];
     products: Product[];
     categories: string[];
-    onBuy: OnProductBuy;
+    onBuy: onBuy;
 }
 
 

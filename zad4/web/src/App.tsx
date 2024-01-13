@@ -2,7 +2,7 @@ import './App.css';
 import React, {useState} from 'react';
 import Products from "./components/products/Products";
 import Cart from "./components/cart/Cart";
-import {OnProductBuy, Product} from "./components/products/ProductsTypes";
+import {onBuy, Product} from "./components/products/ProductsTypes";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {CartProduct, OnCreateOrder} from "./components/cart/CartTypes";
@@ -25,12 +25,14 @@ const products: Product[] = [
         price: "5",
     }
 ];
+
 function App() {
-    const [cartProducts, setCartProducts] = useState<CartProduct[] >([]);
-    const addToCart: OnProductBuy = (name, id, price, amount) => {
+    const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
+    const addToCart: onBuy = (name, id, price, amount) => {
         const newProduct: CartProduct = {id, name, price: parseInt(price), amount};
-        const productIndex = cartProducts.findIndex((product) => product.id === id);
-        if(productIndex === -1)
+        const productIndex = cartProducts.findIndex((product) => product?.id === id);
+
+        if (productIndex === -1)
             setCartProducts([...cartProducts, newProduct]);
         else
             cartProducts[productIndex].amount += 1;
@@ -50,10 +52,23 @@ function App() {
     const onCreateOrder: OnCreateOrder = (products, customerData) => {
         console.log(products);
         console.log(customerData);
-        return {
+
+        const res = {
             status: 200,
             message: "Order created successfully.",
         };
+
+        if (res.status !== 200)
+            return Promise.resolve({
+                status: res.status,
+                message: res.message,
+            });
+
+        setCartProducts([]);
+        return Promise.resolve({
+            status: res.status,
+            message: res.message,
+        });
     }
 
     return (

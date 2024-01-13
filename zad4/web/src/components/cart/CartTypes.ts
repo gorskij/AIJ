@@ -12,7 +12,7 @@ type OrderResult = {
     message: string;
 }
 
-export type OnCreateOrder = (products: CartProduct[], formData: CustomerData) => OrderResult;
+export type OnCreateOrder = (products: CartProduct[], formData: CustomerData) => Promise<OrderResult>;
 
 export type CartProps = {
     products: CartProduct[];
@@ -21,4 +21,5 @@ export type CartProps = {
 
 export type CartDetailsProps = CartProps & {
     onClickAway: () => void;
+    onProductRemove: () => void;
 }

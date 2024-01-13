@@ -3,24 +3,21 @@ import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import {InputFormProps, CustomerData} from "./InputFormTypes";
 
-function InputForm({setData}: InputFormProps) {
+function InputForm({onFormSubmitted}: InputFormProps) {
     const formData = useRef({});
     const [emailError, setEmailError] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
     const [nameError, setNameError] = useState(false);
-    const [isSent, setIsSent] = useState(false);
 
     const handleInput = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { target: { name: string; value: boolean } }>
     ) => {
         // @ts-ignore
         formData.current[e.target.name] = e.target.value;
-        if (isSent) setIsSent(false);
     }
     const handleSend = () => {
         if (validateInput(formData.current)) {
-            setData(formData.current as CustomerData);
-            setIsSent(true);
+            onFormSubmitted(formData.current as CustomerData);
         }
     }
     const validateInput = (data: {
@@ -95,9 +92,8 @@ function InputForm({setData}: InputFormProps) {
                 aria-errormessage={"Podaj prawidłowy email"}
             />
 
-            {isSent ? <h2>Zamówienie wysłane!</h2> :
-                <div style={{marginTop: 20}}><Button variant="contained" onClick={() => handleSend()}>Złóż
-                    zamówienie</Button></div>}
+            <div style={{marginTop: 20}}><Button variant="contained" onClick={() => handleSend()}>Złóż
+                zamówienie</Button></div>
         </>
     );
 }

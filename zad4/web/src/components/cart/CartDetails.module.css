@@ -38,3 +38,9 @@
     display: flex;
     justify-content: center;
 }
+
+.cross {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

@@ -4,8 +4,8 @@ export type CustomerData = {
     phoneNumber: string;
 }
 
-export type SetFormData = (data: CustomerData) => void;
+export type FormSubmitted = (data: CustomerData) => void;
 
 export type InputFormProps = {
-    setData: SetFormData;
+    onFormSubmitted: FormSubmitted;
 }
