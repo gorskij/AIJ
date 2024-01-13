@@ -11,9 +11,16 @@ const categories = ["Wszystkie", "Kategoria1", "Kategoria2"];
 
 const products: Product[] = [
     {
+        id: "0",
+        category: "Kategoria1",
+        name: "Testowy produkt 0",
+        description: "aaa",
+        price: "5",
+    },
+    {
         id: "1",
         category: "Kategoria1",
-        name: "Testowy produkt",
+        name: "Testowy produkt 1",
         description: "Testowy opis Testowy opis Testowy opis Testowy opis Testowy opis",
         price: "100",
     },
@@ -23,7 +30,70 @@ const products: Product[] = [
         name: "Testowy produkt 2",
         description: "aaa",
         price: "5",
-    }
+    },
+    {
+        id: "3",
+        category: "Kategoria1",
+        name: "Testowy produkt 3",
+        description: "aaa",
+        price: "5",
+    },
+    {
+        id: "4",
+        category: "Kategoria1",
+        name: "Testowy produkt 4",
+        description: "aaa",
+        price: "5",
+    },
+    {
+        id: "5",
+        category: "Kategoria1",
+        name: "Testowy produkt 5",
+        description: "aaa",
+        price: "5",
+    },
+    {
+        id: "6",
+        category: "Kategoria1",
+        name: "Testowy produkt 6",
+        description: "aaa",
+        price: "5",
+    },
+    {
+        id: "7",
+        category: "Kategoria1",
+        name: "Testowy produkt 7",
+        description: "vjjfvd fdvdfjk vfdvddvf",
+        price: "5",
+    },
+    {
+        id: "8",
+        category: "Kategoria1",
+        name: "Testowy produkt 8",
+        description: "aaa",
+        price: "5",
+    },
+    {
+        id: "9",
+        category: "Kategoria1",
+        name: "Testowy produkt 9",
+        description: "vjjfvd fdvdfjk vfdvddvf",
+        price: "5",
+    },
+    {
+        id: "10",
+        category: "Kategoria1",
+        name: "Testowy produkt 10",
+        description: "aaa",
+        price: "5",
+    },
+    {
+        id: "11",
+        category: "Kategoria1",
+        name: "Testowy produkt 7",
+        description: "vjjfvd fdvdfjk vfdvddvf",
+        price: "5",
+    },
 ];
 
 function App() {
@@ -54,7 +124,7 @@ function App() {
         console.log(customerData);
 
         const res = {
-            status: 200,
+            status: 400,
             message: "Order created successfully.",
         };
 

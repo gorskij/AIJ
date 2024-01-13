@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import {MenuItem} from "@mui/material";
 import ShoppingCart from "./shopping-cart.svg";
 import {Product, ProductProps} from "./ProductsTypes";
+import Button from "@mui/material/Button";
 
 function Products({title, headerRow, products, categories, onBuy}: ProductProps) {
     const [shownRowsCount, setShownRowsCount] = useState(10);
@@ -67,9 +68,11 @@ function Products({title, headerRow, products, categories, onBuy}: ProductProps)
                 </TextField>
             </div>
 
-            {rowsInitialized && <Table headerRow={shownHeaderRow} columnSizes={[4, 10, 2, 1]}
+            {rowsInitialized && <Table headerRow={shownHeaderRow} columnSizes={[2, 4, 2, 1]}
                                        rows={shownRows.slice(0, shownRowsCount)}/>}
-            {areMoreProductsToShow && <button onClick={() => showMore()}>Pokaż więcej</button>}
+            {areMoreProductsToShow &&
+                <div style={{marginTop: 20}}><Button variant="contained" onClick={() => showMore()}>
+                    Pokaż więcej</Button></div>}
             <div className={styles.results}>Liczba znalezionych: {shownRows?.length},
                 Widocznych: {shownRows?.length > shownRowsCount ? shownRowsCount : shownRows?.length}</div>
         </div>
