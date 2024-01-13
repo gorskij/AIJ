@@ -4,8 +4,8 @@
     margin-right: 13px;
 }
 :root {
-    --cart-view-height: 80vh;
-    --cart-view-width: 80vw;
+    --cart-view-height: 90vh;
+    --cart-view-width: 90vw;
 }
 
 .cart {
