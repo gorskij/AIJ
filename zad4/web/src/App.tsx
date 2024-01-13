@@ -120,11 +120,8 @@ function App() {
     }
 
     const onCreateOrder: OnCreateOrder = (products, customerData) => {
-        console.log(products);
-        console.log(customerData);
-
         const res = {
-            status: 400,
+            status: 200,
             message: "Order created successfully.",
         };
 
