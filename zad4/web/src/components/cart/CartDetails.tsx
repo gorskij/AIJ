@@ -11,7 +11,7 @@ function CartDetails({products, onCreateOrder, onClickAway, onProductRemove}: Ca
     const [productRows, setProductRows] = useState([]);
     const [productsData, setProductsData] = useState<CartProduct[]>(products);
     const [orderSent, setOrderSent] = useState(false);
-    const [orderSentError, setOrderSentError] = useState(false);
+    const [orderSentError, setOrderSentError] = useState("");
 
     const computeTotalPrice = (products: CartProduct[]) => {
         return products.reduce((total, product) => {
@@ -24,9 +24,10 @@ function CartDetails({products, onCreateOrder, onClickAway, onProductRemove}: Ca
         const res = await onCreateOrder(productsData, formData);
         if(res.status === 200) {
             setOrderSent(true);
+            setOrderSentError("");
         }
         else {
-            setOrderSentError(true);
+            setOrderSentError(res.message);
         }
     }
     useEffect(() => {
@@ -89,7 +90,13 @@ function CartDetails({products, onCreateOrder, onClickAway, onProductRemove}: Ca
                     {products.length !== 0 &&
                         <InputForm onFormSubmitted={(formData) => {sendOrder(productsData, formData)}}/>}
                     {orderSent && <h2>Zamówienie wysłane!</h2>}
-                    {orderSentError && <h2>Wystąpił błąd podczas wysyłania zamówienia.</h2>}
+                    {orderSentError && (
+                        <>
+                        <h2>Wystąpił błąd podczas wysyłania zamówienia</h2>
+                        <h3>Przyczyna: {orderSentError}</h3>
+                        </>
+                    )}
+                    <div style={{paddingBottom: 100}}></div>
                 </div>
             </ClickAwayListener>
         </>
