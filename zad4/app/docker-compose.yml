@@ -1,33 +1,23 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres:16
-    restart: always
+  postgres:
+    image: postgres
+    container_name: aji_zad4
     environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
       POSTGRES_DB: ajidb
-      POSTGRES_USER: ajiuser
-      POSTGRES_PASSWORD: ajipassword
     ports:
-      - "5432:5432"
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - '5432:5432'
 
   pgadmin:
     image: dpage/pgadmin4
-    restart: always
+    container_name: my-pgadmin-container
     environment:
       PGADMIN_DEFAULT_EMAIL: root@root.com
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
-      - "8000:80"
-
-  test_db:
-    image: postgres:16
-    restart: always
-    environment:
-      POSTGRES_DB: testdb
-      POSTGRES_USER: testuser
-      POSTGRES_PASSWORD: testpassword
-    ports:
-      - "5433:5432"
+      - '5050:80'
+    depends_on:
+      - postgres
