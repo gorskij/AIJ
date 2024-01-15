@@ -1,0 +1,56 @@
+.icon {
+    width: 100%;
+    height: auto;
+    margin-right: 13px;
+}
+:root {
+    --cart-view-height: 90vh;
+    --cart-view-width: 90vw;
+}
+
+.cart {
+    width: 100px;
+    max-width: 100px;
+    height: 100px;
+    margin-top: 20px;
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.cart:hover {
+    filter: invert(30%);
+}
+
+.cart:active {
+    filter: invert(50%);
+}
+
+.amount {
+    font-size: 25px;
+    font-weight: 600;
+    position: relative;
+    top: -80%;
+}
+
+
+@media (max-width: 550px) {
+    .cart {
+        width: 65px;
+        height: 65px;
+    }
+
+    .amount {
+        top: -90%;
+    }
+}
+
+@media (min-width: 550px) {
+    .cart {
+        left: calc(100vw / 2 + 180px)
+    }
+}

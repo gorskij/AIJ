@@ -1,0 +1,28 @@
+.container {
+    width: 30vw;
+}
+
+.row:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+
+.headerRow {
+    background-color: black;
+    color: white;
+    font-weight: 600;
+}
+
+
+.cell {
+    font-size: 20px;
+    padding: 12px;
+    text-align: center;
+}
+
+.table {
+    border-spacing: 0;
+    border: 1px solid #ccc;
+    width: 80vw;
+    max-width: 1400px;
+    table-layout: fixed;
+}

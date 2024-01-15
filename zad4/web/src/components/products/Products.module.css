@@ -1,0 +1,28 @@
+.centeringContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.results {
+    margin-top: 10px;
+}
+
+.filters {
+    margin-bottom: 20px;
+}
+
+.shoppingCart {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.shoppingCart:hover {
+    filter: invert(30%);
+}
+
+.shoppingCart:active {
+    filter: invert(50%);
+}
