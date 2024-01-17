@@ -18,7 +18,7 @@ function App() {
     useEffect(() => {
         fetch('http://localhost:8080/categories')
             .then(response => response.json())
-            .then(data => setCategories(data))
+            .then(data => setCategories(data.map((category) => category.name)))
             .catch(error => console.error('Error fetching categories:', error));
 
         fetch('http://localhost:8080/products')
@@ -75,6 +75,7 @@ function App() {
         })
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 if (data.status === StatusCodes.CREATED) {
                     setCartProducts([]);
                     toast.success("Order created successfully!", {
