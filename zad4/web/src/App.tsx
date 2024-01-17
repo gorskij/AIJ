@@ -23,7 +23,10 @@ function App() {
 
         fetch('http://localhost:8080/products')
             .then(response => response.json())
-            .then(data => setProducts(data))
+            .then(data => setProducts(data.map((product) => {
+                product.category = product.category.name;
+                return product;
+            })))
             .catch(error => console.error('Error fetching products:', error));
 
         fetch('http://localhost:8080/orders')

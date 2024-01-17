@@ -12,6 +12,7 @@ function Products({title, headerRow, products, categories, onBuy}: ProductProps)
     const [shownRows, setShownRows] = useState(null);
     const [shownHeaderRow, setShownHeaderRow] = useState(null);
     const [category, setCategory] = useState("Wszystkie");
+    const [name, setName] = useState("");
 
     const areMoreProductsToShow = shownRowsCount < products.length;
     const rowsInitialized = shownHeaderRow && shownRows;
@@ -23,16 +24,18 @@ function Products({title, headerRow, products, categories, onBuy}: ProductProps)
 
     const getProductRow = useCallback((product: Product) => [...getProductDataToView(product), buyButton(product)], [buyButton]);
     const showMore = () => setShownRowsCount(shownRowsCount + 10);
-    const updateRows = (name: string) => {
-        if (name === "") {
-            setShownRows(products.map((product) => getProductRow(product)));
-            return;
-        }
-        const foundProducts = products.filter((product: Product) => {
-            return checkName(product.name, name) && checkCategory(product.category, category)
-        });
-        setShownRows(foundProducts.map((product: Product) => getProductRow(product)));
-    };
+   
+    
+    useEffect(() => {
+        const updateRows = () => {
+            const foundProducts = products.filter((product: Product) => {
+                return checkName(product.name, name) && checkCategory(product.category, category);
+            });
+            setShownRows(foundProducts.map((product: Product) => getProductRow(product)));
+        };
+        updateRows();
+
+    }, [category, getProductRow, name, products])
 
     useEffect(() => {
         setShownHeaderRow([...headerRow, "Kup"]);
@@ -54,7 +57,7 @@ function Products({title, headerRow, products, categories, onBuy}: ProductProps)
             <div className={styles.filters}>
                 <TextField style={{marginRight: 10, width: 150}} label="Nazwa" variant="outlined"
                            onChange={(e) => {
-                               updateRows(e.target.value);
+                               setName(e.target.value);
                            }}/>
                 <TextField
                     style={{width: 150}}
@@ -101,6 +104,6 @@ function getProductDataToView(product: Product) {
 function checkCategory(productCategory: string, currentCategory: string) {
     if (currentCategory === "Wszystkie")
         return true;
-    else
+
         return productCategory === currentCategory;
 }
