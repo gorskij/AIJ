@@ -55,20 +55,34 @@ const handleProductValidation = async (orderId: number, products: any, res: Resp
 
 export const getAllOrders = async (req: Request, res: Response) => {
   try {
-    const orders = await prisma.order.findMany({ include: { products: true } });
+    const orders = await prisma.order.findMany({
+      include: {
+        products: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+
     res.status(StatusCodes.OK).json(orders);
   } catch (error) {
     handlePrismaError(error, res);
   }
 };
-
 export const getOrderById = async (req: Request, res: Response) => {
   const orderId = parseInt(req.params.id, 10);
 
   try {
     const order = await prisma.order.findUnique({
       where: { id: orderId },
-      include: { products: true },
+      include: {
+        products: {
+          include: {
+            product: true,
+          },
+        },
+      },
     });
 
     if (order) {

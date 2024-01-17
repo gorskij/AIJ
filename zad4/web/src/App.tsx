@@ -1,105 +1,39 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Products from "./components/products/Products";
 import Cart from "./components/cart/Cart";
-import {onBuy, Product} from "./components/products/ProductsTypes";
-import {ToastContainer, toast} from 'react-toastify';
+import Order from "./components/order/Order";  // Import the Order component
+import { onBuy, Product } from "./components/products/ProductsTypes";
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {CartProduct, OnCreateOrder} from "./components/cart/CartTypes";
-
-const categories = ["Wszystkie", "Kategoria1", "Kategoria2"];
-
-const products: Product[] = [
-    {
-        id: "0",
-        category: "Kategoria1",
-        name: "Testowy produkt 0",
-        description: "aaa",
-        price: "5",
-    },
-    {
-        id: "1",
-        category: "Kategoria1",
-        name: "Testowy produkt 1",
-        description: "Testowy opis Testowy opis Testowy opis Testowy opis Testowy opis",
-        price: "100",
-    },
-    {
-        id: "2",
-        category: "Kategoria1",
-        name: "Testowy produkt 2",
-        description: "aaa",
-        price: "5",
-    },
-    {
-        id: "3",
-        category: "Kategoria1",
-        name: "Testowy produkt 3",
-        description: "aaa",
-        price: "5",
-    },
-    {
-        id: "4",
-        category: "Kategoria1",
-        name: "Testowy produkt 4",
-        description: "aaa",
-        price: "5",
-    },
-    {
-        id: "5",
-        category: "Kategoria1",
-        name: "Testowy produkt 5",
-        description: "aaa",
-        price: "5",
-    },
-    {
-        id: "6",
-        category: "Kategoria1",
-        name: "Testowy produkt 6",
-        description: "aaa",
-        price: "5",
-    },
-    {
-        id: "7",
-        category: "Kategoria1",
-        name: "Testowy produkt 7",
-        description: "vjjfvd fdvdfjk vfdvddvf",
-        price: "5",
-    },
-    {
-        id: "8",
-        category: "Kategoria1",
-        name: "Testowy produkt 8",
-        description: "aaa",
-        price: "5",
-    },
-    {
-        id: "9",
-        category: "Kategoria1",
-        name: "Testowy produkt 9",
-        description: "vjjfvd fdvdfjk vfdvddvf",
-        price: "5",
-    },
-    {
-        id: "10",
-        category: "Kategoria1",
-        name: "Testowy produkt 10",
-        description: "aaa",
-        price: "5",
-    },
-    {
-        id: "11",
-        category: "Kategoria1",
-        name: "Testowy produkt 7",
-        description: "vjjfvd fdvdfjk vfdvddvf",
-        price: "5",
-    },
-];
+import { CartProduct, OnCreateOrder } from "./components/cart/CartTypes";
+import { StatusCodes } from 'http-status-codes';
 
 function App() {
     const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<string[]>([]);
+    const [allOrders, setAllOrders] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:8080/categories')
+            .then(response => response.json())
+            .then(data => setCategories(data))
+            .catch(error => console.error('Error fetching categories:', error));
+
+        fetch('http://localhost:8080/products')
+            .then(response => response.json())
+            .then(data => setProducts(data))
+            .catch(error => console.error('Error fetching products:', error));
+
+        fetch('http://localhost:8080/orders')
+            .then(response => response.json())
+            .then(data => setAllOrders(data))
+            .catch(error => console.error('Error fetching orders:', error));
+    }, []);
+
     const addToCart: onBuy = (name, id, price, amount) => {
-        const newProduct: CartProduct = {id, name, price: parseInt(price), amount};
+        const newProduct: CartProduct = { id, name, price: parseInt(price), amount };
         const productIndex = cartProducts.findIndex((product) => product?.id === id);
 
         if (productIndex === -1)
@@ -120,34 +54,96 @@ function App() {
     }
 
     const onCreateOrder: OnCreateOrder = (products, customerData) => {
-        const res = {
-            status: 200,
-            message: "Order created successfully.",
+        const orderData = {
+            userName: customerData.name,
+            approvalDate: new Date().toISOString(),
+            email: customerData.email,
+            phoneNumber: customerData.phoneNumber,
+            orderStatus: "NIEZATWIERDZONE",
+            products: products.map((product) => ({
+                productId: product.id,
+                quantity: product.amount,
+            })),
         };
 
-        if (res.status !== 200)
-            return Promise.resolve({
-                status: res.status,
-                message: res.message,
-            });
+        return fetch('http://localhost:8080/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === StatusCodes.CREATED) {
+                    setCartProducts([]);
+                    toast.success("Order created successfully!", {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                } else {
+                    toast.error(`Failed to create order: ${data.message}`, {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                    });
+                }
 
-        setCartProducts([]);
-        return Promise.resolve({
-            status: res.status,
-            message: res.message,
-        });
-    }
+                return {
+                    status: data.status,
+                    message: data.message,
+                };
+            })
+            .catch(error => {
+                console.error('Error creating order:', error);
+                toast.error('Error creating order', {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+
+                return {
+                    status: StatusCodes.INTERNAL_SERVER_ERROR,
+                    message: 'Internal Server Error',
+                };
+            });
+    };
 
     return (
         <div className="App">
-            <ToastContainer/>
-            <Cart products={cartProducts} onCreateOrder={onCreateOrder}/>
+            <ToastContainer />
+            <Cart products={cartProducts} onCreateOrder={onCreateOrder} />
             <div className="centering-div">
-                <Products title={"Produkty"} headerRow={["Nazwa", "Opis", "Cena"]} products={products}
-                          categories={categories} onBuy={addToCart}/>
+                <Products
+                    title={"Produkty"}
+                    headerRow={["Nazwa", "Opis", "Cena"]}
+                    products={products}
+                    categories={categories}
+                    onBuy={addToCart}
+                />
+            </div>
+
+            {/* Display the Order component */}
+            <div className="centering-div">
+                <Order orders={allOrders} />
             </div>
         </div>
-
     );
 }
 
