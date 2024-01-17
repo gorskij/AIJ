@@ -135,7 +135,7 @@ function App() {
                     title={"Produkty"}
                     headerRow={["Nazwa", "Opis", "Cena"]}
                     products={products}
-                    categories={categories}
+                    categories={["Wszystkie", ...categories]}
                     onBuy={addToCart}
                 />
             </div>

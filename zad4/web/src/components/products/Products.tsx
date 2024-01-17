@@ -11,6 +11,7 @@ function Products({title, headerRow, products, categories, onBuy}: ProductProps)
     const [shownRowsCount, setShownRowsCount] = useState(10);
     const [shownRows, setShownRows] = useState(null);
     const [shownHeaderRow, setShownHeaderRow] = useState(null);
+    const [category, setCategory] = useState("Wszystkie");
 
     const areMoreProductsToShow = shownRowsCount < products.length;
     const rowsInitialized = shownHeaderRow && shownRows;
@@ -22,12 +23,14 @@ function Products({title, headerRow, products, categories, onBuy}: ProductProps)
 
     const getProductRow = useCallback((product: Product) => [...getProductDataToView(product), buyButton(product)], [buyButton]);
     const showMore = () => setShownRowsCount(shownRowsCount + 10);
-    const updateRowsByName = (name: string) => {
+    const updateRows = (name: string) => {
         if (name === "") {
             setShownRows(products.map((product) => getProductRow(product)));
             return;
         }
-        const foundProducts = products.filter((product: Product) => compare(product.name, name));
+        const foundProducts = products.filter((product: Product) => {
+            return checkName(product.name, name) && checkCategory(product.category, category)
+        });
         setShownRows(foundProducts.map((product: Product) => getProductRow(product)));
     };
 
@@ -51,7 +54,7 @@ function Products({title, headerRow, products, categories, onBuy}: ProductProps)
             <div className={styles.filters}>
                 <TextField style={{marginRight: 10, width: 150}} label="Nazwa" variant="outlined"
                            onChange={(e) => {
-                               updateRowsByName(e.target.value);
+                               updateRows(e.target.value);
                            }}/>
                 <TextField
                     style={{width: 150}}
@@ -59,6 +62,7 @@ function Products({title, headerRow, products, categories, onBuy}: ProductProps)
                     select
                     label="Kategoria"
                     defaultValue="Wszystkie"
+                    onChange={(event) => setCategory(event.target.value)}
                 >
                     {categories.map((option) => (
                         <MenuItem key={option} value={option}>
@@ -81,7 +85,7 @@ function Products({title, headerRow, products, categories, onBuy}: ProductProps)
 
 export default Products;
 
-function compare(phrase: string, query: string) {
+function checkName(phrase: string, query: string) {
     for (let x = 0; x < query.length; x++) {
         if (query[x] !== phrase[x]) {
             return false;
@@ -92,4 +96,11 @@ function compare(phrase: string, query: string) {
 
 function getProductDataToView(product: Product) {
     return [product.name, product.description, product.price + " zł"];
+}
+
+function checkCategory(productCategory: string, currentCategory: string) {
+    if (currentCategory === "Wszystkie")
+        return true;
+    else
+        return productCategory === currentCategory;
 }
