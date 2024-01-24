@@ -4,6 +4,7 @@ services:
   postgres:
     image: postgres
     container_name: aji_zad4
+    restart: always
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password

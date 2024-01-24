@@ -76,7 +76,7 @@ function App() {
             },
             body: JSON.stringify(orderData),
         })
-            .then(response => response.json())
+            .then(async response => {return {status: response.status, data: await response.json()}})
             .then(data => {
                 console.log(data)
                 if (data.status === StatusCodes.CREATED) {
@@ -92,7 +92,7 @@ function App() {
                         theme: "light",
                     });
                 } else {
-                    toast.error(`Failed to create order: ${data.message}`, {
+                    toast.error(`Failed to create order: ${data.data.message}`, {
                         position: "bottom-right",
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -106,7 +106,7 @@ function App() {
 
                 return {
                     status: data.status,
-                    message: data.message,
+                    message: data.data.message,
                 };
             })
             .catch(error => {
@@ -143,7 +143,6 @@ function App() {
                 />
             </div>
 
-            {/* Display the Order component */}
             <div className="centering-div">
                 <Order orders={allOrders} />
             </div>
